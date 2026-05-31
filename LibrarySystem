@@ -1,0 +1,252 @@
+
+class User{
+	
+	protected String userId;
+	protected String name;
+	protected String email;
+	protected String phoneno;
+	
+	
+	User(String userId,String name,String email,String phoneno)
+	{
+		this.userId = userId;
+		this.name = name;
+		this.email = email;
+		this.phoneno = phoneno;
+	}
+	
+	public void displayInfo()
+	{
+		System.out.println("User Information...");
+		System.out.println("\n User Id : "+userId);
+		System.out.println("\n Name : "+name);
+		System.out.println("\n Email : "+email);
+		System.out.println("\n Phone Number "+phoneno);
+		
+	}
+	
+	public void borrowBook(String bookTitle)
+	{
+		System.out.println("Name : "+name+" is borrowing "+bookTitle);
+	}
+	
+	public int getMaxBook()
+	{
+		return 1;
+	}
+	
+	public String getName() {
+		return name;
+		
+	}
+	
+	public String userId()
+	{
+		return userId;
+	}
+	
+	public String email()
+	{
+		return email;
+	}
+}
+
+class Student extends User
+{
+	private String semester;
+	private String enrollmentno;
+	private int bookBorrowed;
+	
+	Student(String userId,String name,String email,String phoneno,String semester,String enrollmentno)
+	{
+		super(userId,name,email,phoneno);
+		this.semester = semester;
+		this.enrollmentno = enrollmentno;
+		this.bookBorrowed = 0;
+	}
+	
+	@Override
+	public void borrowBook(String bookTitle)
+	{
+		if(bookBorrowed >= getMaxBook())
+		{
+			System.out.println("X"+name+"has reached limit "+getMaxBook()+"books");
+			return;
+		}
+		bookBorrowed++;
+		System.out.println("STUDENT BORROWED");
+		System.out.println("Student : "+name+" Semester : "+semester);
+		System.out.println("Book : "+bookTitle);
+		System.out.println("Current Book "+bookBorrowed+"/"+getMaxBook());
+		
+	}
+	
+	@Override
+	public int getMaxBook()
+	{
+		return 3;
+	}
+	
+	public void showSemester()
+	{
+		System.out.println("Semester : "+semester);
+	}
+	
+	public void showEnrollmentno()
+	{
+		System.out.println("Enrollment Number : "+enrollmentno);
+	}
+	
+	public int getBookBorrowed()
+	{
+		return bookBorrowed;
+	}
+}
+
+class Teacher extends User
+{
+	private String department;
+	private String designation;
+	private int booksBorrowed;
+	
+	Teacher(String userId,String name,String email,String phoneno,String department,String designation)
+	{
+		super(userId,name,email,phoneno);
+		this.department = department;
+		this.designation =designation;
+		this.booksBorrowed = 0;
+	}
+	
+	public void borrowBook(String bookTitle)
+	{
+		if(booksBorrowed>=getMaxBook())
+		{
+			System.out.println("X "+name+"has reached max limit ");
+		}
+		booksBorrowed++;
+		System.out.println("TEACHER BORROWED ");
+		System.out.println("Teacher : "+name+ " Designation : "+designation);
+		System.out.println("Department : "+department);
+		System.out.println("Book : "+bookTitle);
+		System.out.println("Current Books "+booksBorrowed);
+		
+	}
+	
+	public int getMaxBook()
+	{
+		return 10;
+	}
+	
+	 public void showDepartment() {
+	        System.out.println("Department: " + department);
+	    }
+	    
+	    // Teacher-specific method
+	    public void showDesignation() {
+	        System.out.println("Designation: " + designation);
+	    }
+	    
+	    // Teacher-specific method
+	    public int getBooksBorrowed() {
+	        return booksBorrowed;
+	    }
+}
+
+class Admin extends User
+{
+	private String adminlevel;
+	private int booksBorrowed;
+	
+	Admin(String userId,String name,String email,String phoneno,String adminlevel)
+	{
+		super(userId,name,email,phoneno);
+		this.adminlevel = adminlevel;
+		this.booksBorrowed = 0;
+	}
+	
+	public void borrowBook(String bookTitle)
+	{
+		if(booksBorrowed>=getMaxBook())
+		{
+			System.out.println("X "+name+"has exceed limit");
+		}
+		booksBorrowed++;
+		System.out.println("ADMIN BORROWED");
+		System.out.println("Admin : "+name+" Admin level : "+adminlevel);
+		System.out.println("Book : "+bookTitle);
+		System.out.println("Current Book "+booksBorrowed);
+	}
+	
+	@Override
+	public int getMaxBook()
+	{
+		return 10;
+	}
+	
+	public void showAdminLevel()
+	{
+		System.out.println("Show Admin Level "+adminlevel);
+	}
+	
+	public int getBooksBorrowed()
+	{
+		return booksBorrowed;
+	}
+}
+public class LibrarySystem {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("========LIBRARY MANAGEMENT SYSTEM =========");
+		System.out.println("INHERITANCE PRACTICE");
+		
+		System.out.println("Creating Users");
+		
+		Student s= new Student("Adam Eve ","STD001","adam@edu.in","7894561234","4","EN202");
+		
+		Teacher t = new Teacher("Stella Warker", "TEA001","stella@collage.in","4545454545454","Computer Science","Assistance Professor");
+		Admin a = new Admin("Amit Singh","ADM456","amit@collage.in","3214569874","Senior");
+		
+		System.out.println("Testing Inherited method");
+		s.displayInfo();
+		t.displayInfo();
+		a.displayInfo();
+		
+		System.out.println("=====TESTING CHILD SPECIFIC METHOD===========");
+		s.showSemester();
+		s.showEnrollmentno();
+		System.out.println("===========================");
+		t.showDepartment();
+		t.showDesignation();
+		
+		System.out.println("=========TESTING OVERRIDEN METHODS=======");
+		System.out.println("Student max books" +s.getMaxBook());
+		System.out.println("Techer max books "+t.getMaxBook());
+		System.out.println("Admin Max book "+a.getMaxBook());
+		
+		System.out.println("==========TESTING BORROW BOOKS==========");
+		s.borrowBook("Java Programming");
+		s.borrowBook("Data Structure");
+		s.borrowBook("Python Programming");
+		
+		System.out.println();
+		t.borrowBook("Advance Java ");
+		t.borrowBook("Database System");
+		
+		System.out.println();
+		a.borrowBook("Admin Management System");
+		
+		System.out.println("=====POLYMORPHISM DEMO==========");
+		User user1 = new Student("Priya Singh", "STU002", "priya@college.edu","9876543213", "2", "EN2024002");
+		User user2 = new Teacher("Prof. Amit Gupta", "TEA002", "amit@college.edu","9876543214", "Mathematics", "Professor");
+		User user3 = new Admin("Neha Verma", "ADM002", "neha@college.edu","9876543215", "Junior");
+		
+		System.out.println("User1 max book "+user1.getMaxBook());
+		System.out.println("User2 max book "+user2.getMaxBook());
+		System.out.println("User3 max book "+user3.getMaxBook());
+		
+
+	}
+
+}
