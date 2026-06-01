@@ -1,0 +1,116 @@
+package polymorphism;
+
+class Employee
+{
+	protected String name;
+	
+	Employee(String name)
+	{
+		this.name = name;
+	}
+	
+	public double calculateSalary()
+	{
+		return 0.0;
+	}
+	
+	public void displayInfo() {
+		System.out.println("=====EMPLOYEE DETAILS====");
+		System.out.println("Name : "+name);
+	}
+}
+
+class FullTimeEmployee extends Employee
+{
+	private double monthlysalary;
+	FullTimeEmployee(String name,double monthlysalary)
+	{
+		super(name);
+		this.monthlysalary = monthlysalary;
+	}
+	
+	@Override
+	public double calculateSalary()
+	{
+		return monthlysalary;
+	}
+	
+	@Override
+	public void displayInfo()
+	{
+		System.out.println("====FULL TIME EMPLOEE=======");
+		System.out.println("Name : "+name);
+		System.out.println("Monthly Salary : "+monthlysalary);
+	}
+}
+
+class PartTimeEmployee extends Employee
+{
+	private double hourlyrate;
+	private double hoursworked;
+	
+	PartTimeEmployee(String name, double hourlyrate, double hoursworked)
+	{
+		super(name);
+		this.hourlyrate = hourlyrate;
+		this.hoursworked = hoursworked;
+	}
+	
+	@Override
+	public double calculateSalary()
+	{
+		return hourlyrate * hoursworked;
+	}
+	
+	@Override
+	public void displayInfo()
+	{
+		System.out.println("==========PARTTIME EMPLOYEEE=====");
+		System.out.println("Name : "+name);
+		System.out.println("Salary : "+ calculateSalary());
+	}
+}
+
+class CommissionEmployee extends Employee
+{
+	private double basesalary;
+	private double commission;
+	private double sales;
+	
+	CommissionEmployee(String name, double basesalary, double commission,double sales)
+	{
+		super(name);
+		this.basesalary = basesalary;
+		this.commission = commission;
+		this.sales = sales;
+	}
+	
+	@Override
+	public double calculateSalary()
+	{
+		return basesalary + (commission * sales);
+	}
+	
+	@Override
+	public void displayInfo()
+	{
+		System.out.println("=======COMMISSION EMPLOYEE");
+		System.out.println("Name : "+name);
+		System.out.println("Salary : "+(basesalary+(commission*sales)));
+	}
+}
+public class Main {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Employee emp1 = new FullTimeEmployee("Alice", 50000);
+		Employee emp2= new PartTimeEmployee("Balcon", 20, 100);
+		Employee emp3 = new CommissionEmployee("John" , 50000, 10000, 10);
+		
+		emp1.displayInfo();
+		emp2.displayInfo();
+		emp3.displayInfo();
+	}
+
+}
