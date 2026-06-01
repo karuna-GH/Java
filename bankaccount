@@ -1,0 +1,58 @@
+package Encapsulation;
+
+class BankAccount
+{
+	private String accountno;
+	private double balance;
+	
+	BankAccount(String accountno, double initialBalance)
+	{
+		this.accountno = accountno;
+		balance = initialBalance;
+	}
+	
+	public String getAccountno()
+	{
+		return accountno;
+	}
+	
+	public double getBalance()
+	{
+		return balance;
+	}
+	
+	public void deposit(double amount)
+	{
+		if(amount>0)
+		{
+			balance += amount;
+			System.out.println("Amount "+amount+" Deposited..!!");
+		}
+	}
+	
+	public void withdraw(double amount)
+	{
+		if(amount<0)
+		{
+			System.out.println("Amount must be Positive..!!");
+		}
+		else if(amount>balance)
+		{
+			System.out.println("Insufficient Balance..!!!");
+		}
+		else {
+			balance -= amount;
+			System.out.println(amount+" is deducted from "+accountno+" account ");
+			System.out.println("Current Balance : "+getBalance());
+		}
+	}
+}
+public class Main {
+	
+	public static void main(String args[])
+	{
+		BankAccount b= new BankAccount("784596123",6585.00);
+		b.deposit(1000);
+		b.withdraw(100);
+	}
+}
