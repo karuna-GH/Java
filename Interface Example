@@ -1,0 +1,107 @@
+package interfaceExample;
+
+interface Payment
+{
+	void processPayment(double amount);
+	void refund(double amount);
+	
+	default void displayPaymentMethod()
+	{
+		System.out.println("Pamet Method is Generic..!!");
+	}
+	
+	static boolean isValid(double amount)
+	{
+		return amount > 0;
+	}
+}
+
+class CreditCard implements Payment
+{
+	private String cardnumber;
+	
+	CreditCard(String cardnumber)
+	{
+		this.cardnumber = cardnumber;
+	}
+	
+	@Override
+	public void processPayment(double amount)
+	{
+		if(Payment.isValid(amount))
+		{
+			System.out.println("Processing Credit Card Pament of Rs. "+amount);
+			System.out.println("Credit card number ****_****_****_"+cardnumber.substring(cardnumber.length()-4));
+		}else {
+				System.out.println("Invalid Payment amount..!!!");
+
+		}
+	}
+	
+	@Override
+	public void refund(double amount)
+	{
+		System.out.println("Refunding Rs. "+amount+" to credit card..!!" );
+	}
+	
+	public void displayPaymentMethod()
+	{
+		System.out.println("Pament method is credit card..!!");
+	}	
+}
+
+
+class UPI implements Payment
+{
+	private String upiid;
+	
+	UPI(String upiid)
+	{
+		this.upiid = upiid;
+	}
+	
+	public void processPayment(double amount)
+	{
+		if(Payment.isValid(amount))
+		{
+			System.out.println("Processing pament of Rs. "+amount);
+			System.out.println("UPI ID : "+upiid);
+		}else {
+			System.out.println("invalid Payment Amount");
+		}
+	}
+	
+	@Override
+	public void refund(double amount)
+	{
+		System.out.println("Refunding of amount of Rs. "+amount);
+	}
+	
+	public void displayPamentMethod()
+	{
+		System.out.println("Payment method : UPI");
+	}
+}
+
+public class PaymentExample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		CreditCard cd = new CreditCard("1234567890123456");
+		cd.processPayment(10000);
+		cd.refund(3000);
+		cd.displayPaymentMethod();
+		
+		System.out.println("==============");
+		UPI up = new UPI("user@paytm");
+		up.processPayment(60000);
+		up.refund(200);
+		up.displayPamentMethod();
+		
+		System.out.println("========Using static method========");
+		System.out.println("is 1000 is valid : "+Payment.isValid(1000));
+		System.out.println("is -100 is valid : "+Payment.isValid(-100));
+	}
+
+}
