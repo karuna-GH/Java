@@ -1,0 +1,83 @@
+package abstraction;
+
+abstract class BankAccount
+{
+	private double balance = 0;
+	
+	public abstract void deposite(double amount);
+	public abstract void withdraw(double amount);
+	
+	public void displayBalance()
+	{
+		System.out.println("Your current balance : "+balance);
+	}
+	
+	protected double getBalance()
+	{
+		return balance;
+	}
+	
+	protected void setBalance(double balance)
+	{
+		this.balance = balance;
+	}
+}
+
+class SavingAccount extends BankAccount
+{
+	@Override
+	public void deposite(double amount)
+	{
+		setBalance(getBalance()+amount);
+		System.out.println("Deposited Rs. "+amount+" in our account");
+	}
+	
+	@Override
+	public void withdraw(double amount)
+	{
+		if(getBalance()-amount>=500)
+		{
+			setBalance(getBalance()-amount);
+			System.out.println("Withdraw Rs. "+amount+ "from Saving account..!!!");
+		}else
+		{
+			System.out.println("withdraw failed..!!!! Minimuim balance of 500 must be maintained..!!!");
+		}
+	}
+}
+
+class CurrentAccount extends BankAccount
+{
+	@Override
+	public void deposite(double amount)
+	{
+		setBalance(getBalance()+amount);
+		System.out.println("Deposited Rs. "+amount+" to Current Account..!!");		
+	}
+	
+	@Override
+	public void withdraw(double amount)
+	{
+		setBalance(getBalance()-amount);
+		System.out.println("Withdraw Amount Rs. "+amount+" from Current Account..!!");
+	}
+}
+public class BankAccountExample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		SavingAccount sa = new SavingAccount();
+		System.out.println("===========SAVING ACCOUNT============");
+		sa.deposite(100000.00);		
+		sa.withdraw(200);
+		sa.displayBalance();
+		
+		System.out.println("===========CURRENT ACCOUNT===========");
+		CurrentAccount ca = new CurrentAccount();
+		ca.deposite(30000);
+		ca.withdraw(300);
+		ca.displayBalance();
+
+}
+}
